@@ -1,12 +1,8 @@
 package indi.util;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import org.apache.commons.math3.analysis.function.Inverse;
-import org.apache.commons.math3.analysis.function.Minus;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
-import org.apache.commons.math3.linear.CholeskyDecomposition;
 import org.apache.commons.math3.linear.LUDecomposition;
 import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.stat.correlation.Covariance;
@@ -24,8 +20,8 @@ public class GMMUtil {
     public static double computeDet(double[][] mattrix) {  
         // 将list转化为array  
         RealMatrix rm = new Array2DRowRealMatrix(mattrix);
-        CholeskyDecomposition c = new CholeskyDecomposition(rm);
-        double res = c.getDeterminant();
+        LUDecomposition LU = new LUDecomposition(rm);
+        double res = LU.getDeterminant();
         return res;  
     }  
 	
@@ -205,8 +201,6 @@ public class GMMUtil {
     public static double[][] toArray(ArrayList<ArrayList<Double>> a) {  
         int  dataNum = a.size();  
         int dataDimen= a.get(0).size();
-        System.out.println("dataNum="+dataNum);
-        System.out.println("dataDimen="+dataDimen);
         double[][] res = new double[dataNum][dataDimen];  
           
         for(int i = 0; i < dataNum; i++) {  
@@ -236,6 +230,15 @@ public class GMMUtil {
         return res;  
     }  
       
+    
+    public static double[] getDiag(double[][] matrix){
+    	double[] diag = new double[matrix.length];
+    	for(int i=0;i<matrix.length;++i){
+    		diag[i]=matrix[i][i];
+    	}
+    	return diag;
+    }
+    
     /** 
      *  
     * @Title: diag  

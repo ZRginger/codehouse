@@ -98,9 +98,6 @@ public class InitParameter {
 					TFMattrix[i][j]=vectorForCountWordsShowInSegment[i][j]*temp;
 				}
 			}
-//			for(int i=0;i<height;++i){
-//			System.out.println("tf="+Arrays.toString(TFMattrix[i]));
-//			}
 			return TFMattrix;
 		}
 		
@@ -167,9 +164,6 @@ public class InitParameter {
 				double total =0;
 				for(int j=0;j<height;++j){
 					total+=TFMattrix[j][i];
-				}
-				if(total==0){
-					System.out.println("**********wrong*************");
 				}
 			}
 			
@@ -326,4 +320,3 @@ public class InitParameter {
 		}
 		
 }
-;
