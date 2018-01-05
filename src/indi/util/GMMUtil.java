@@ -1,6 +1,7 @@
 package indi.util;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.LUDecomposition;
@@ -27,6 +28,15 @@ public class GMMUtil {
 	
 	
 	
+    public static double computeDistanceOu(double[] d1,double[] d2){
+    	double dist = 0;
+    	for(int i=0;i<d1.length;++i){
+    		double tmp = d1[i]-d2[i];
+    		dist+=Math.pow(tmp, 2);
+    	}
+    	return Math.sqrt(dist);
+    }
+    
 	
     /** 
      *  
@@ -46,7 +56,7 @@ public class GMMUtil {
         	sqrtSum2+=Math.pow(d2[i], 2);
         }  
        	denaminator=Math.sqrt(sqrtSum1)+Math.sqrt(sqrtSum2);
-       	return nominator/denaminator;
+       	return 1.0-nominator/denaminator;
     }  
       
     /** 
@@ -62,6 +72,12 @@ public class GMMUtil {
         return res;  
     }  
       
+    public static double[][] computeCov(double[][] dataSet) {  
+        Covariance cov  = new Covariance(dataSet);
+        double[][] res = cov.getCovarianceMatrix().getData();
+        return res;  
+    } 
+    
     /** 
      *  
     * @Title: computeInv  
@@ -165,7 +181,7 @@ public class GMMUtil {
     	double[][] res = new double[a1.length][a1[0].length];  
         for(int i = 0; i < a1.length; i++) {  
         	for(int j = 0;j < a1[0].length;++j){
-        		res[i][j]=a1[i][j]=a2[i][j];
+        		res[i][j]=a1[i][j]-a2[i][j];
         	}
         }  
         return res;  
@@ -259,20 +275,15 @@ public class GMMUtil {
     }  
     public static void main(String[] args){
     	double[][] data = new double[][]{
-    			{1,2},
-    			{3,6},
-    			{4,2},
-    			{5,2}
+    			{10,15,29},
+    			{15,46,13},
+    			{23,21,30},
+    			{11,9,35}
     	};
-    	double[][] data2 = new double[5][2];
-    	for(int i=0;i<5;++i){
-    		for(int j=0;j<2;++j){
-    			data2[i][j]=j;
-    		}
+    	
+    	double[][] res=GMMUtil.computeCov(data);
+    	for(int i=0;i<res.length;++i){
+    		System.out.println(Arrays.toString(res[i]));
     	}
-////    	double[][] res = new Minus().;
-//    	for(int i=0;i<res.length;++i){
-//    		System.out.println(Arrays.toString(res[i]));
-//    	}
     }
 }  

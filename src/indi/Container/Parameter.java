@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class Parameter {  
     private double[][] pMiu; // 均值参数k个分布的中心点，每个中心点d维  
     private double[] pPi = null; // k个GMM的权值  
-    private ArrayList<ArrayList<ArrayList<Double>>> pSigma; // k类GMM的协方差矩阵,d*d*k  
+    private double[][][] pSigma; // k类GMM的协方差矩阵,d*d*k  
       
 	public double[][] getpMiu() {  
         return pMiu;  
@@ -28,18 +28,21 @@ public class Parameter {
     public double[] getpPi() {  
         return pPi;  
     }  
+    public double getpPi(int index) {  
+        return pPi[index];  
+    }  
     public void setpPi(double[] pPi) {  
         this.pPi = pPi;  
     }  
     
     
-    public ArrayList<ArrayList<Double>> getpSigma(int index) {
-    	return this.pSigma.get(index);
+    public double[][] getpSigma(int index) {
+    	return this.pSigma[index];
     }
-    public ArrayList<ArrayList<ArrayList<Double>>> getpSigma() {  
+    public double[][][] getpSigma() {  
         return pSigma;  
     }  
-    public void setpSigma(ArrayList<ArrayList<ArrayList<Double>>> pSigma) {  
+    public void setpSigma(double[][][] pSigma) {  
         this.pSigma = pSigma;  
     }  
 }  

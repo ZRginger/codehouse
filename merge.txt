@@ -1,69 +1,97 @@
+On whether unions promote efficiency, a commenter was correct to point out that unions can benefit members, but they do so but restricting competition among workers.
+While this may raise the wages of unionized workers, it harms nonunionized workers (as well as consumers).
+If because of unionization an employer's wage bill rises, its demand for labor will decline, which means that fewer workers will be employed.
+By the way, in response to another comment, the decline in unionization in the private sector seems to me better evidence that union-protected employment is less efficient than employment at will than a study would be.
+It is the real market test.
+One commenter suggests that tenure increases the incentive of workers to invest in specialized skills.
+This may be true, but observation suggests that employers are able to encourage such investment without granting tenure.
+All sorts of nontenured private-sector workers, including doctors, lawyers, and engineers, invest in specialized skills.
+The traditional case for tenure at the university level rests on two pillars.
+The first and most prominent is that this gives professors freedom to express unpopular views in their writings and lectures.
+The second is that professors in the same field are the best ones to judge the qualifications and promise of potential new hires and existing colleagues.
+This is why departments rather than central administrators choose who to hire and who to let go.
+Tenure insures the existence of a core of faculty with a long-term commitment to their departments who make the hiring and firing decisions.
+For reasons I have expressed elsewhere (see my 1/15/06 “Comment on Tenure”), I do not believe that these arguments are powerful enough to justify the rigidities introduced by having the tenure system at colleges and universities.
+Whether that conclusion is correct or not, neither of these arguments made for having tenure in higher education has close applicability to teachers at the K-12 level.
+They publish very little, and mainly teach materials that are not controversial.
+Becker explains the mechanism: specialization in firm-specific skills may make a worker more dependent on his employer, but it also increases the worker's value to the employer.
+One comment perpetuates the very natural error of thinking that Einstein was employed by Princeton University.
+He was employed by the Institute of Advanced Study, which is located in Prdinceton, New Jersey, but is not part of the university.
+Princeton U.
+has garnered a great deal of prestige from the co-location of the Institute!
+Another and more germane misunderstanding is that tenure is guaranteed employment.
+That is not correct.
+If a college shuts down, it does not have to continue paying the tenured faculty.
+There are exceptions, such as teachers of Israeli-Palestinian relations, or theories of evolution, but teaching materials of this type are exceptions and not the rule.
+The second reason used to justify tenure at the university level, that senior colleagues are the ones with the qualifications to choose new hires and to decide who to hold on to in their departments, is not applicable at the K-12 level.
+For unlike what happens at universities, administrators at K-12 schools, such as principals, do the hiring, not teachers with tenure.
+Since administrators (or older teachers) cannot readily judge which of the hires will turn out to be good teachers, that provides a strong reason why K-12 teachers should not get tenure, especially not after only a short time of teaching.
+Sometimes K-12 tenure is justified with the argument that the quality of teachers is not known or objectively measured, so that principals and other administrators will play favorites in choosing who to retain in the absence of a tenure system.
+I do not believe this argument is correct since whereas it is hard to judge when hiring a new teacher how good she will be, it is not difficult to know teaching quality after someone has been teaching for a few years.
+The principal gets feedback from parents and students, and also from other teachers.
+I am confident, for example, that I know who are the good and bad teachers in economics at the University of Chicago.
+Every large public school system has many excellent and good teachers.
+Unfortunately, every public school system also has really bad teachers who cannot be fired.
+Some miss many classes, others do not know the materials they teach, while others do not really try to teach, and prefer to joke around or mainly give their opinions.
+They should be fired, but they cannot in part because of the tenure system.
+Having the power to get rid of the bad teachers would improve everyone’s teaching, partly by raising the incentives and morale of other teachers.
+Teachers’ unions are the major force opposed to abandoning the tenure system, as they are the major opposition to pretty much every major school reform that has ever been suggested- including charter schools, school vouchers, and evaluations of teacher performance.
+They are an important hindrance to improving the quality of teaching and the performance of students.
+I oppose teachers unions and the tenure system for teachers (including university teachers) partly because they are especially detrimental to the education received by students from low income and more disadvantaged backgrounds.
+And I think without being certain that if a university closes a department, it doesn't have to retain the faculty of that department on its payroll.
+In effect what tenure guarantees is that you won't be replaced--even by a better candidate!
+Iincidentally, I do not suggest that a university or other employer should be forbidden to offer a tenure contract if the employee is willing to accept a compensating reduction in wage.
+The problem is asymmetric information.
+If the employee asks for such a contract, the employer may wonder whether the employee has private information that he is not sharing--for example, that he doesn't intend working hard any more.
+I agree that tenure protects academics against being fired because of their unpopular ideas, but there are other forms of retaliation that are almost as effective.
+If there is a market for the unpopular idea, the fired professor can find another job.
+If there is no market, he's likely to be ostracized by his peers.
+I would like some examples of where tenure made the difference between production and suppression (presumablly temporary) of a genuinely important idea.
+One comment misunderstands me as advocating abolition of tenure for civil servants.
+Not so.
+All I said was that I didn't think the Supreme Court in the name of the First Amendment should have abolished the spoils system.
+I emphasized that when performance measures are unavailable, which they often are for public services, the creation of a "high commitment" environment, including tenure, as a substitute for high salaries to compensate for risk of being fired for nonobjective reasons, may be optimal.
+A spoils system may well be less efficient than a tenure system, yet the tenure system may be less efficient than employment at will in settings in which performance measures are feasible.
+I do think tenure for judges makes sense, because without it the judiciary would be excessively politicized.
+I do not have tenure in my part-time teaching job at the University of Chicago, and I think that's fine.
+Nevertheless, I do not believe that elimination of unions and tenure would vastly improve the performance of students from these backgrounds.
+As the 1966 Coleman Report showed decades ago, family background is a much more important contributor to the overall performance of students than are the type of schools that students attend.
+Nevertheless, it is very worthwhile to improve what schools can do by eliminating tenure, reducing the power of unions, and introducing more competition into the public school system.
+To improve family life is not easily achieved and requires a long time horizon.
+So it is best to do what can be achieved that will help student performance, especially help students who need the greatest help from the schools they attend.
 The traditional justification for academic tenure is that otherwise professors would be unwilling to express unpopular views for fear of being fired.
 This argument for academic tenure is extremely weak in the United States where several thousand colleges and universities compete for professors.
 In fact, tenure only became common at American universities in the 1920's.
-It is possible for academics with extremely unpopular views to gain an appointment with tenure at different institutions, as seen from the tenure of faculty who deny the holocaust, or a Ward Churchill at The University of Colorado with outrageous views on terrorism and other issues.
-The case for tenure is stronger in countries where governments control all universities, and can block academics with unpopular opinions from gaining and keeping appointments.
-Yet even that argument has become weaker with the rapidly growing international market for good academics.
-Are there other persuasive arguments for academic tenure?
-Some have been made in the economics literature, including the alleged difficulty in judging the quality of teaching and research, the non-profit nature of universities, and still others.
-I have not found any of them persuasive- for example, there is rather widespread agreement in most departments about which are the good teachers, and also to a large extent about who has produced the more influential research.
-The American Constitution gives Federal judges lifetime tenure so that they would be free to decide cases without fear of political reprisals for unpopular decisions.
 Most Americans employed in the private sector do not have any job protection.
 They are what are known as "employees at will.
 They can quit or be fired at any time for any reason other than a reason forbidden by law, such as race.
 Unionized workers (now a very small percentage of the private-sector work force) have some job protection; they can be laid off if their employer experiences a fall in demand and therefore doesn?
 It need as many workers, but they can be fired only "for cause," normally some form of deficient job performance.
-In posts on March 12th and 19th of 2005 I argued against the lifetime tenure of judges as encouraging judges to remain too long, especially now when they are likely to live into their eighties and into their nineties within a couple of decades.
-A single long term of between 14-20 years would entirely eliminate any political influence over their decisions due to any fear of losing their positions.
-It would also weaken the opposition to the appointment of judges with strong views since they would not be deciding cases for thirty years or more.
-Civil servants have tenure because of similar political considerations, but top-level government officials do not have tenure presently, and are selected by the administration in power.
-It is hard to see why low-level government employees should have tenure either since they do not make any politically sensitive decisions.
-Perhaps tenure would be justified at certain intermediate levels, but that would at best cover only a small fraction of all government officials.
-Companies often give de facto tenure to employees who have worked for them for a long time, except when the companies get into financial difficulties.
-This is readily explained since long-term employees usually have made significant investments in what is called firm-specific human capital.
-This term means knowledge and skills of employees that are more valuable at the company where they have worked for many years than at other companies.
-In order to encourage such investment, and to discourage inefficient quits, companies give a combination of implicit tenure and higher wages to their long-term employees.
 In the public sector, most employees below the top political level have extensive job protection (including teachers), except in the military and other national-security employment, such as the CIA.
 Generally, civil employees of the government can be discharged only for cause, which often is very difficult to prove.
 The Supreme Court has largely abolished, in the name of free speech, the "spoils" system whereby state and local government jobs were given to the political supporters of the party in power.
 Federal judges can be removed (barring physical or mental disability) only by the cumbersome process of impeachment by the House of Representatives and conviction by the Senate.
 An important category of job-protected workers that bridges the public and private divide is tenured professors, who cannot be fired without cause.
-Note that tenure alone would not be sufficient to encourage these investments and discourage quits.
-It has to be combined with higher earnings to long-term employees.
-Indeed, high enough earnings to employees with much firm-specific investment would be sufficient to discourage quits without tenure.
-But bargaining between workers and employees should lead to at least de facto tenure because that is more efficient if employees are more productive at this firm than at other firms.
-It is efficient because both workers and companies would be better off if workers with much relevant firm-specific investment stayed at the companies where they have worked for many years.
 Finally, in Europe most workers have far more extensive job protections than American workers do.
 The question I wish to address is whether this pattern makes any economic sense.
-One way to pose the question is to ask why--since employment at will is the cheapest form of employment contract--aren't all employees employees at will?
+One way to pose the question is to ask why-since employment at will is the cheapest form of employment contract-aren't all employees employees at will?
 In the otherwise dissimilar cases of unionized workers and public employees protected by the Supreme Court?
 Is interpretation of the First Amendment against political firing, tenure (employment protection) is imposed from the outside.
-Employers would like greater flexibility, but outsiders--unions or judges--impose tenure for their own reasons.
+Employers would like greater flexibility, but outsiders-unions or judges-impose tenure for their own reasons.
 Unions worry that without tenure protection, employers will pick off the union's supporters; the Supreme Court worries that without tenure protection public employees will be afraid to express political views opposed to those of their superiors, and so freedom of expression will be curtailed.
 But surely the curtailment would be slight, since few public employees will engage in public disagreement with their superiors even if they can't be disciplined for doing so.
 Moreover, there is a tradeoff between professional competence and personal loyalty.
 A slightly less able employee who is loyal to his superiors because of political compatibility or even nepotism will work more harmoniously with them, and the reduction in friction may offset a (modest) competence deficit.
-Firm-specific investment provides some of the "commitment" that Posner discusses since employees are obviously more committed to companies where they are more productive.
-Similarly, the company would be more committed to these employees than to other employees.
-Commitment is also related to loyalty to an organization and to employees.
-Loyalty in any organization is extremely important, both loyalty from employees to the organization, and from the organization to its employees.
-That can be encouraged by higher earning as performance improves, and by good and considerate treatment of employees.
 Tenure is an efficient system in what organizational economists call a "high commitment" workplace.
 Contrast two types of enterprise.
 In one, the contribution of the individual employee to the enterprise?
 Is output is readily measured. Ordinarily this will be a business firm.
 Revenues, costs, and ultimately profits provide objective measures of performance.
 The individual employee's contribution to those measures may be more difficult to measure, especially when employees work in teams.
-But reasonable estimates are usually possible--employees and their superiors negotiate reasonable goals for the coming year relating to sales, markups, and cost reductions and progress toward those goals is measured throughout the year.
+But reasonable estimates are usually possible-employees and their superiors negotiate reasonable goals for the coming year relating to sales, markups, and cost reductions and progress toward those goals is measured throughout the year.
 Employees can therefore be paid a salary or wage that approximates their marginal product.
 With their productivity continuously measurable, there is no need for job protection.
 Or so it seems; for even in a firm, there may be some benefits to providing a degree of job protection.
-It would be in the self-interest of organizations to keep their loyal employees, so no explicit tenure rule seems desirable to encourage the retention of loyal members of an organization, no matter what work or profession they engage in.
-Since de facto tenure is in the self-interest of companies as well as workers, the value of tenure does not provide justification for laws against firing older workers, or laws that require costly severance pay to long-term employees.
-Union contracts that make long-term employees less subject to layoffs may in some circumstances provide useful codifications of implicit tenure.
-However, this could be inefficient when more senior union members have a disproportionate influence over union bargaining.
-In any case, one would expect companies without unions to have an incentive when that is efficient to codify hiring and firing rules.
-In fact, most large non-union companies already have these rules.
 Suppose employees are in a position where by sharing their know-how they could increase the productivity of other employees.
 They may be reluctant to do this if they fear losing their jobs because they have helped the other employees become more productive than they.
 Some firms deal with this problem by making an employee's annual bonus depend not only on his own contribution but also on the overall performance of the firm that year.
@@ -74,6 +102,14 @@ If tenure is an efficient employment contract, employers will institute it witho
 The steep decline of unionization in the private sector is a convincing "Darwinian" refutation of the argument one used to hear that unions actually promote efficiency.
 Although performance measures are generally most feasible for business firms, some governmental or other noncommercial activities lend themselves to such measures.
 Criminal-investigation agencies such as the FBI provide good examples.
+It is possible for academics with extremely unpopular views to gain an appointment with tenure at different institutions, as seen from the tenure of faculty who deny the holocaust, or a Ward Churchill at The University of Colorado with outrageous views on terrorism and other issues.
+The case for tenure is stronger in countries where governments control all universities, and can block academics with unpopular opinions from gaining and keeping appointments.
+Yet even that argument has become weaker with the rapidly growing international market for good academics.
+Are there other persuasive arguments for academic tenure?
+Some have been made in the economics literature, including the alleged difficulty in judging the quality of teaching and research, the non-profit nature of universities, and still others.
+I have not found any of them persuasive- for example, there is rather widespread agreement in most departments about which are the good teachers, and also to a large extent about who has produced the more influential research.
+The American Constitution gives Federal judges lifetime tenure so that they would be free to decide cases without fear of political reprisals for unpopular decisions.
+In posts on March 12th and 19th of 2005 I argued against the lifetime tenure of judges as encouraging judges to remain too long, especially now when they are likely to live into their eighties and into their nineties within a couple of decades.
 An FBI agent can be evaluated by the number of arrests he makes weighted by convictions (arrests that do not lead to convictions are not productive), with the convictions in turn weighted by the length of the sentence and the value of any property recovered as a result of the prosecution.
 Note that the measure here, as in a firm, is not a simple quantitative measure of contribution to output, but rather is a value measure.
 In activities (some of which may be team production within business firms) in which performance measures are infeasible, usually because either the value of output or the employee's contribution to that output cannot be quantified, other methods of employee motivation than performance-based compensation must be sought.
@@ -98,6 +134,14 @@ Quality of teaching is readily measurable by student evaluations, provided care 
 Quality of research is readily measurable by grants, prizes, and above all by citations to the professor?
 scholarly publications, weighted by the quality of the journal in which the citations appear.
 In some fields, such as mathematics, there is generally a significant falling off in academic output at a young age, and there is fear that without tenure these faculty would be turned out to pasture long before retirement age.
+A single long term of between 14-20 years would entirely eliminate any political influence over their decisions due to any fear of losing their positions.
+It would also weaken the opposition to the appointment of judges with strong views since they would not be deciding cases for thirty years or more.
+Civil servants have tenure because of similar political considerations, but top-level government officials do not have tenure presently, and are selected by the administration in power.
+It is hard to see why low-level government employees should have tenure either since they do not make any politically sensitive decisions.
+Perhaps tenure would be justified at certain intermediate levels, but that would at best cover only a small fraction of all government officials.
+Companies often give de facto tenure to employees who have worked for them for a long time, except when the companies get into financial difficulties.
+This is readily explained since long-term employees usually have made significant investments in what is called firm-specific human capital.
+This term means knowledge and skills of employees that are more valuable at the company where they have worked for many years than at other companies.
 But this is no different from the situation in professional sports, modeling, and other youthful occupations, where it is handled by an alteration in the wage profile.
 If a career in mathematics entails a sharp fall-off in market wages after, say, age 40, the academic market will compensate by offering disproportionately high wages to young mathematicians; otherwise, talented mathematicians will choose professions, such as economics, in which math skills are valued but productivity does not decline steeply with age.
 One reason for the superior productivity of U.S.
@@ -107,8 +151,25 @@ Tenure removes the stick but not necessarily the carrot.
 More productive professors can be paid more and, even if their university has a lock-step compensation system, can obtain prestige and outside income by outstanding performance.
 The greater cost of tenure is simply in forcing retention of inferior employees.
 The 80-year-old mathematician may be working hard, but he may be incapable of achieving the output of the 25-year-old mathematician who would take his place were it not for tenure.
-Note how governmental prohibition of compulsory retirement at a fixed age aggravates the inefficiency of tenure--and is no doubt contributing to its eventual abandonment.
+Note how governmental prohibition of compulsory retirement at a fixed age aggravates the inefficiency of tenure-and is no doubt contributing to its eventual abandonment.
 Perhaps the strongest argument for academic tenure is that without it academics would be reluctant to undertake promising projects with a high risk of failure.
-But the situation is no different in "knowledge" firms such as software and pharmaceutical-drug producers, which encourage their scientists to undertake high-risk projects--and do not think it necessary to offer tenure.
+But the situation is no different in "knowledge" firms such as software and pharmaceutical-drug producers, which encourage their scientists to undertake high-risk projects-and do not think it necessary to offer tenure.
 If most good new ideas are produced by young academics, then an institution that raises the average age of faculty, namely tenure, seems likely to reduce academic productivity.
-An interesting empirical project, therefore, would be to study the effect of England's abolition of tenure on the average age and productivity of English university faculties.
+An interesting empirical project, therefore, would be to study the effect of England's abolition of tenure on the average age and productivity of English university faculties. 
+In order to encourage such investment, and to discourage inefficient quits, companies give a combination of implicit tenure and higher wages to their long-term employees.
+Note that tenure alone would not be sufficient to encourage these investments and discourage quits.
+It has to be combined with higher earnings to long-term employees.
+Indeed, high enough earnings to employees with much firm-specific investment would be sufficient to discourage quits without tenure.
+But bargaining between workers and employees should lead to at least de facto tenure because that is more efficient if employees are more productive at this firm than at other firms.
+It is efficient because both workers and companies would be better off if workers with much relevant firm-specific investment stayed at the companies where they have worked for many years.
+Firm-specific investment provides some of the "commitment" that Posner discusses since employees are obviously more committed to companies where they are more productive.
+Similarly, the company would be more committed to these employees than to other employees.
+Commitment is also related to loyalty to an organization and to employees.
+Loyalty in any organization is extremely important, both loyalty from employees to the organization, and from the organization to its employees.
+That can be encouraged by higher earning as performance improves, and by good and considerate treatment of employees.
+It would be in the self-interest of organizations to keep their loyal employees, so no explicit tenure rule seems desirable to encourage the retention of loyal members of an organization, no matter what work or profession they engage in.
+Since de facto tenure is in the self-interest of companies as well as workers, the value of tenure does not provide justification for laws against firing older workers, or laws that require costly severance pay to long-term employees.
+Union contracts that make long-term employees less subject to layoffs may in some circumstances provide useful codifications of implicit tenure.
+However, this could be inefficient when more senior union members have a disproportionate influence over union bargaining.
+In any case, one would expect companies without unions to have an incentive when that is efficient to codify hiring and firing rules.
+In fact, most large non-union companies already have these rules.

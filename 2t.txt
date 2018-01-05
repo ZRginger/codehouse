@@ -1,35 +1,3 @@
-On whether unions promote efficiency, a commenter was correct to point out that unions can benefit members, but they do so but restricting competition among workers.
-While this may raise the wages of unionized workers, it harms nonunionized workers (as well as consumers).
-If because of unionization an employer's wage bill rises, its demand for labor will decline, which means that fewer workers will be employed.
-By the way, in response to another comment, the decline in unionization in the private sector seems to me better evidence that union-protected employment is less efficient than employment at will than a study would be.
-It is the real market test.
-One commenter suggests that tenure increases the incentive of workers to invest in specialized skills.
-This may be true, but observation suggests that employers are able to encourage such investment without granting tenure.
-All sorts of nontenured private-sector workers, including doctors, lawyers, and engineers, invest in specialized skills.
-Becker explains the mechanism: specialization in firm-specific skills may make a worker more dependent on his employer, but it also increases the worker's value to the employer.
-One comment perpetuates the very natural error of thinking that Einstein was employed by Princeton University.
-He was employed by the Institute of Advanced Study, which is located in Prdinceton, New Jersey, but is not part of the university.
-Princeton U.
-has garnered a great deal of prestige from the co-location of the Institute!
-Another and more germane misunderstanding is that tenure is guaranteed employment.
-That is not correct.
-If a college shuts down, it does not have to continue paying the tenured faculty.
-And I think without being certain that if a university closes a department, it doesn't have to retain the faculty of that department on its payroll.
-In effect what tenure guarantees is that you won't be replaced--even by a better candidate!
-Iincidentally, I do not suggest that a university or other employer should be forbidden to offer a tenure contract if the employee is willing to accept a compensating reduction in wage.
-The problem is asymmetric information.
-If the employee asks for such a contract, the employer may wonder whether the employee has private information that he is not sharing--for example, that he doesn't intend working hard any more.
-I agree that tenure protects academics against being fired because of their unpopular ideas, but there are other forms of retaliation that are almost as effective.
-If there is a market for the unpopular idea, the fired professor can find another job.
-If there is no market, he's likely to be ostracized by his peers.
-I would like some examples of where tenure made the difference between production and suppression (presumablly temporary) of a genuinely important idea.
-One comment misunderstands me as advocating abolition of tenure for civil servants.
-Not so.
-All I said was that I didn't think the Supreme Court in the name of the First Amendment should have abolished the spoils system.
-I emphasized that when performance measures are unavailable, which they often are for public services, the creation of a "high commitment" environment, including tenure, as a substitute for high salaries to compensate for risk of being fired for nonobjective reasons, may be optimal.
-A spoils system may well be less efficient than a tenure system, yet the tenure system may be less efficient than employment at will in settings in which performance measures are feasible.
-I do think tenure for judges makes sense, because without it the judiciary would be excessively politicized.
-I do not have tenure in my part-time teaching job at the University of Chicago, and I think that's fine.
 Most Americans employed in the private sector do not have any job protection.
 They are what are known as "employees at will.
 They can quit or be fired at any time for any reason other than a reason forbidden by law, such as race.
@@ -107,4 +75,4 @@ Note how governmental prohibition of compulsory retirement at a fixed age aggrav
 Perhaps the strongest argument for academic tenure is that without it academics would be reluctant to undertake promising projects with a high risk of failure.
 But the situation is no different in "knowledge" firms such as software and pharmaceutical-drug producers, which encourage their scientists to undertake high-risk projects-and do not think it necessary to offer tenure.
 If most good new ideas are produced by young academics, then an institution that raises the average age of faculty, namely tenure, seems likely to reduce academic productivity.
-An interesting empirical project, therefore, would be to study the effect of England's abolition of tenure on the average age and productivity of English university faculties. 
+An interesting empirical project, therefore, would be to study the effect of England's abolition of tenure on the average age and productivity of English university faculties.

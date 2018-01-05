@@ -1,150 +1,195 @@
 package indi.measure;
 
 import indi.Container.Parameter;
+import indi.test.ClusterEvaluation;
 import indi.util.GMMUtil;
 import indi.util.Util;
 
-import java.lang.reflect.Array;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import javax.sound.sampled.DataLine;
-
 public class GMMMixtureModel {  
+	private int[]        input = null;	//已知分类结果
 	private int			 dataDimen = 0;	//数据维度
 	private int			 dataNum = 0;	//数据个数
 	private int			 k		 = 0;	//作者个数
 	private Parameter    parameter = null;	//GMMMixtureModel的参数 
 	private double[][]   dataSet = null;	//数据集
-	private double[][]   cov     = null;	//k个高斯分布的协方差矩阵
-	public GMMMixtureModel(double[][] dataSet, int dataNum, int k, int dataDimen){
+	private int[] type = null;		//数据种类	
+	double[][] px = null;
+	public GMMMixtureModel(double[][] dataSet, int dataNum, int k, int dataDimen,int[] input){
 		this.dataDimen=dataDimen;
 		this.dataNum=dataNum;
 		this.k=k;
 		this.dataSet = dataSet;
+		this.setInput(input);
 		parameter = new Parameter();//初始化参数
+		double[][] res =new KMeans().cluster();
+		this.parameter.setpMiu(res);
 		this.iniParameters();
 	}
 	
-    /** 
+	/**
+	 * 
+	 */
+	public void setInput(int[] input){
+		this.input=input;
+	}
+    /**
+     * @throws IOException  
     * @Title: GMMCluster  
     * @Description: GMM聚类算法的实现类，返回每条数据的类别(0~k-1) 
     * @return int[] 
     * @throws 
      */  
-    public int[] GMMCluster() {  
+    public int[] GMMCluster() throws IOException {  
         double Lpre = -1000000; // 上一次聚类的误差  
         double threshold = 0.0001;  
-      for(int n=0;n<4;++n){  
-            double[][] px = computeProbablity();  
-            System.out.println("求得的概率为:");
-            for(int i=0;i<px.length;++i){
-            	System.out.println(Arrays.toString(px[i]));
+      for(int n=0;n<8;++n){  
+//    	  System.out.println("n="+n);
+            px = computeProbablity();  
+            outPut();
+           
+            //更新pie
+            double[] tmpPie = new double[k];
+            Arrays.fill(tmpPie, 0);
+            for(int j=0;j<k;++j){
+	            for(int i=0;i<dataNum;++i){
+	            	tmpPie[j]+=px[j][i];
+	            }
+	            tmpPie[j]/=dataNum;
             }
-            //更新pGama的值
-            double[][] pGama = new double[dataNum][k];  
-            for(int i = 0; i < dataNum; i++) {  
-                for(int j = 0; j < k; j++) {  
-                    pGama[i][j] = px[j][i] * parameter.getpPi()[j];  
-                }  
-            }  
-            double[] sumPGama = GMMUtil.matrixSum(pGama, 2);  
-            for(int i = 0; i < dataNum; i++) {  
-                for(int j = 0; j < k; j++) {  
-                    pGama[i][j] = pGama[i][j] / sumPGama[i];  
-                }  
-            }  
-              
-            // 更新pMiu  
-            double[] NK = GMMUtil.matrixSum(pGama, 1); // 第k个高斯生成每个样本的概率的和，所有Nk的总和为N  
-            double[] NKReciprocal = new double[NK.length];  
-            for(int i = 0; i < NK.length; i++) {  
-                NKReciprocal[i] = 1 / NK[i];  
-            }  
-            double[][] tmpMiu = GMMUtil.matrixMultiply(
-            		GMMUtil.matrixMultiply(GMMUtil.diag(NKReciprocal), GMMUtil.matrixReverse(pGama)), dataSet);  
-              parameter.setpMiu(tmpMiu);
-              
-            // 更新pPie  Alpha
-            double[] tmpPie = new double[k];  
-            for(int i = 0; i < NK.length; i++) {  
-            	tmpPie[i] = NK[i] / dataNum;  
-            }  
-            parameter.setpPi(tmpPie);  
+            this.parameter.setpPi(tmpPie);
+//            System.out.println("pie");
+//            System.out.println(Arrays.toString(tmpPie));
+            //更新pmiu
+            double[][] tmpMiu = new double[k][dataDimen];
+            for(int i=0;i<k;++i){
+            	Arrays.fill(tmpMiu[i], 0);
+            }
+            for(int i=0;i<k;++i){
+            	for(int j=0;j<dataDimen;++j){
+            		for(int p=0;p<dataNum;++p){
+            			tmpMiu[i][j]+=px[i][p]*dataSet[p][j];
+            		}
+            	}
+            	for(int j=0;j<dataDimen;++j){
+            		tmpMiu[i][j]/=tmpPie[i]*dataNum;
+            	}
+            }
+            this.parameter.setpMiu(tmpMiu);
+            
             
             // 更新k个pSigma  
             double[][][] tmpSigma = new double[k][dataDimen][dataDimen];  
             for(int i = 0; i < k; i++) {  
-            	double[][] shift = new double[dataNum][dataDimen];
-            	for(int q=0;q<dataNum;++q){
+            	for(int j=0;j<dataNum;++j){
+            		double[][] offset = new double[1][dataDimen];
             		for(int p=0;p<dataDimen;++p){
-            			shift[q][p]=dataSet[q][p]-tmpMiu[i][p];
+            			offset[0][p]=dataSet[j][p]-tmpMiu[i][p];
+             		}
+            		double[][] revOffset = GMMUtil.matrixReverse(offset);
+            		double[][] tmp=GMMUtil.matrixMultiply(revOffset,offset);
+            		for(int index=0;index<dataDimen;++index){
+            			for(int index2=0;index2<dataDimen;++index2){
+            				tmpSigma[i][index][index2]+=px[i][j]*tmp[index][index2];
+            			}
             		}
             	}
-            	double[][] revShift = GMMUtil.matrixReverse(shift);
-            	double[] para1 = new double[dataNum];
-            	for(int p1=0;p1<dataNum;++p1){
-            		para1[p1]=pGama[p1][i];
-            	}
-            	double[][] diagpGama = GMMUtil.diag(para1);
-            	double[][] para2 = GMMUtil.matrixMultiply(shift, diagpGama);
-            	tmpSigma[i]=GMMUtil.matrixMultiply(revShift,para2);
-            	for(int q=0;q<dataDimen;++q){
+            	for(int j=0;j<dataDimen;++j){
             		for(int p=0;p<dataDimen;++p){
-            			tmpSigma[i][q][p]/=NK[i];
+            			tmpSigma[i][j][p]/=tmpPie[i]*dataNum;
             		}
             	}
             }  
-//              
+            this.parameter.setpSigma(tmpSigma);
+            
 //            // 判断是否迭代结束  
-//            double[][] a = GMMUtil.matrixMultiply(px, tmpPie);  
-//            for(int i = 0; i < dataNum; i++) {  
-//                a[i][0] = Math.log(a[i][0]);  
-//            }  
-//            double L = GMMUtil.matrixSum(a, 1)[0];  
-//              
-//            if(L - Lpre < threshold) {  
-//                break;  
-//            }  
-//            Lpre = L;  
-        }  
+            double[][] pie = new double[1][k];
+            double[][] a = GMMUtil.matrixMultiply(pie,px);  
+            System.out.println("a=");
+            for(int index=0;index<a.length;++index){
+            	System.out.println(Arrays.toString(a[index]));
+            }
+            for(int i = 0; i < dataNum; i++) {  
+                a[0][i] = Math.log(a[0][i]);  
+            }  
+            double L = GMMUtil.matrixSum(a, 2)[0];  
+              
+            if(L - Lpre < threshold) {  
+                break;  
+            }  
+            System.out.println("误差为:"+Lpre);
+            Lpre = L;  
+      }  
         return null;  
     }  
-      
     
     private void preProcess(double[][] invMattrix){
-    	double minValue = Math.pow(1,-1);
+    	double minValue = Math.pow(0.25,1);
     	for(int i=0;i<dataDimen;++i){
     		invMattrix[i][i]+=minValue;
     	}
     }
     
-    
-    /** 
+    /**
+     * @throws IOException  
      *  
     * @Title: computeProbablity  
     * @Description: 计算每个节点（共n个）属于每个分布（k个）的概率 
     * @return double[][] 
     * @throws 
      */  
-    public double[][] computeProbablity() {  
-        double[][] px = new double[k][dataNum];
-        for(int i=0;i<this.k;++i){
-        	double[][] xShift = GMMUtil.matrixMinus(dataSet, GMMUtil.repmat(this.parameter.getpMiu(i),this.dataNum));
-        	double[][] tmpSigma = GMMUtil.toArray(this.parameter.getpSigma(i));
-        	preProcess(tmpSigma);
-        	double[][] invSigma = GMMUtil.computeInv(tmpSigma);
-        	double[][] res = GMMUtil.matrixMultiply(xShift, invSigma);
-        	res = GMMUtil.dotMatrixMultiply(res, xShift);
-        	double[] sum = GMMUtil.matrixSum(res, 2);
-        	
-        	double t = GMMUtil.computeDet(invSigma);
-        	double coef = Math.pow((2 * Math.PI), -(double)dataDimen / 2d) * Math.sqrt(t);  
-        	System.out.println("coef="+coef+" t="+t);
-        	for(int p=0;p<this.dataNum;++p){
-        			px[i][p]=coef*Math.pow(Math.E,-0.5*sum[p]);
+    public double[][] computeProbablity() throws IOException {  
+        for(int i=0;i<this.dataNum;++i){
+        	for(int j=0;j<this.k;++j){
+        		//计算offset
+        		double[][] offset = new double[1][this.dataDimen];
+        		for(int p=0;p<this.dataDimen;++p){
+        			offset[0][p]=this.dataSet[i][p]-this.parameter.getpMiu(j)[p];
+        		}
+        		//计算invSigma
+        		double[][] tmp = this.parameter.getpSigma(j);
+        		double[][] invSigma = new double[dataDimen][dataDimen];
+        		for(int index=0;index<dataDimen;++index){
+        			for(int index2=0;index2<dataDimen;++index2){
+        				invSigma[index][index2]=tmp[index][index2];
+        			}
+        		}
+        		//计算res
+        		preProcess(invSigma);
+        		invSigma=GMMUtil.computeInv(invSigma);
+//        		for(int index=0;index<dataDimen;++index){
+//        			System.out.println(Arrays.toString(invSigma[index]));
+//        		}
+        		double[][] res = GMMUtil.matrixMultiply(offset, invSigma);
+        		double[][] revOffset = GMMUtil.matrixReverse(offset);
+        		double[][] resM = GMMUtil.matrixMultiply(res, revOffset);
+        		//计算sum
+        		double[] sum = resM[0];
+        		//计算coef
+        		double coef = Math.pow((2 * Math.PI), -(double)dataDimen / 2d) * Math.sqrt(GMMUtil.computeDet(invSigma)); 
+        		//计算px
+        		px[j][i]=coef*Math.pow(Math.E, -0.5 * sum[0])*Math.pow(this.parameter.getpPi(j),1);  
         	}
+        }
+        double[] total = new double[dataNum];
+        Arrays.fill(total, 0);
+        for(int i=0;i<k;++i){
+        	for(int j=0;j<dataNum;++j){
+        		total[j]+=px[i][j];
+        	}
+        } 
+        System.out.println("求得的概率为:");
+       
+        for(int i=0;i<k;++i){
+        	for(int j=0;j<dataNum;++j){
+        		px[i][j]=px[i][j]/total[j];
+        		System.out.print(px[i][j]+" ");
+        	}
+        	System.out.println();
         }
         return px;  
     }  
@@ -157,25 +202,30 @@ public class GMMMixtureModel {
     * @throws 
      */  
     public void iniParameters() {  
-          
-        //计算数据的均值
-        double[][] pMiuTmp = generateCentroids();  
-        this.parameter.setpMiu(pMiuTmp);  
-        
+    	this.px=new double[k][dataNum];
+    	this.type=new int[dataNum];
+    	//初始化px
+    	for(int i=0;i<k;++i){
+    		for(int j=0;j<dataNum;++j){
+    			px[i][j]=1.0/k;
+    		}
+    	}
+    	
+        int[] typeNum = new int[k];
         // 对样本节点进行分类计数，进而初始化k个分布的权值  
         double[] pPiTmp = new double[this.dataNum];  
-        int[] type = getTypes();  
-        int[] typeNum = new int[k];  //每个高斯分布生成的样本点数量
+        type = getTypes();  
         for(int i = 0; i < this.dataNum; i++) {  
             typeNum[type[i]]++;  
         }  
+        System.out.println(Arrays.toString(typeNum));
         for(int i = 0; i < k; i++) {  
-        	pPiTmp[i]=typeNum[i]/this.dataNum;
+        	pPiTmp[i]=typeNum[i]/(double)this.dataNum;
+        	System.out.println("均值为:"+pPiTmp[i]);
         }  
         this.parameter.setpPi(pPiTmp);  
-          
         // 计算k个分布的k个协方差  
-        ArrayList<ArrayList<ArrayList<Double>>> pSigmaTmp = new ArrayList<ArrayList<ArrayList<Double>>>();  
+        double[][][] pSigmaTmp = new double[k][dataDimen][dataDimen];  
         for(int i = 0; i < k; i++) {  
             ArrayList<ArrayList<Double>> tmp = new ArrayList<ArrayList<Double>>();  //第i个高斯分布的所有数据
             for(int j = 0; j < this.dataNum; j++) {  
@@ -189,36 +239,18 @@ public class GMMMixtureModel {
             }  
             //计算属于各个高斯分布数据的协方差矩阵
             double[][] cov = GMMUtil.computeCov(tmp);
-            ArrayList<ArrayList<Double>> covList = Util.toArrayList(cov);
-            pSigmaTmp.add(covList);  
+//            ArrayList<ArrayList<Double>> covList = Util.toArrayList(cov);
+//            System.out.println("第"+i+"个协方差");
+            for(int index=0;index<dataDimen;++index){
+            	for(int index2=0;index2<dataDimen;++index2){
+            		pSigmaTmp[i][index][index2]=cov[index][index2];
+//            		System.out.print(pSigmaTmp[i][index][index2]+" ");
+            	}
+//            	System.out.println();
+            }
         }  
         this.parameter.setpSigma(pSigmaTmp);  
     }  
-      
-    /** 
-     *  
-    * @Title: generateCentroids  
-    * @Description: 获取随机的k个中心点 
-    * @return double[][]
-    * @throws 
-     */  
-    public double[][] generateCentroids() {  
-    		double[][] res = new double[this.k][this.dataDimen];  
-            Random rand = new Random();
-            boolean[] choose = new boolean[this.dataNum];
-            Arrays.fill(choose, false);
-            // 随机产生不重复的k个数  
-            for(int i=0;i<this.k;++i){
-	            int index = rand.nextInt(this.dataNum);
-	            while(choose[index]==true){
-	            	index = rand.nextInt(this.dataNum);
-	            }
-	            choose[index]=true;
-	            Util.copyArray(this.dataSet[index], res[i]);
-            }  
-        return res;  
-    }  
-      
     /** 
      *  
     * @Title: getTypes  
@@ -227,22 +259,148 @@ public class GMMMixtureModel {
     * @throws 
      */  
     private int[] getTypes() {  
-        int[] type = new int[dataNum];  
         for(int j = 0; j < dataNum; j++) {  
             double minDistance = GMMUtil.computeDistance(dataSet[j], parameter.getpMiu(0));  
-//            System.out.println("dist="+minDistance);
             type[j] = 0; // 0作为该条数据的类别  
             for(int i = 1; i < k; i++) {  
             	double dis =  GMMUtil.computeDistance(dataSet[j], parameter.getpMiu(i));
-//            	System.out.println("dis="+dis);
                 if(dis < minDistance) {  
                     minDistance = GMMUtil.computeDistance(dataSet[j], parameter.getpMiu(i));  
                     type[j] = i;  
                 }  
             }  
         }  
+        System.out.println("type="+Arrays.toString(type));
         return type;  
     }  
       
+    private void outPut(){
+    	int[] typeNum = new int[k];
+    	Arrays.fill(typeNum, 0);
+    	for(int i=0;i<dataNum;++i){
+    		int typeIndex = 0;
+    		double maximun = Double.MIN_VALUE;
+    		for(int j=0;j<k;++j){
+    			if(px[j][i]>maximun){
+    				maximun=px[j][i];
+    				typeIndex=j;
+    			}
+    		}
+    		type[i]=typeIndex;
+    		typeNum[type[i]]++;
+    	}
+    	System.out.println("typr="+Arrays.toString(type));
+    	System.out.println("typenum="+Arrays.toString(typeNum));
+    }
     
+    
+    
+   public class KMeans{
+	   private double[][] centroids = null;			//数据的均值点
+	   private double[][] preCentroid = null;		//保存的上一次迭代的均值点
+	   private int[]      labelList     = null;		//数据所属的标签
+	   private int[]      labelNum      = null;		//每个标签包含的数据个数
+	   public KMeans(){
+		   this.centroids=new double[k][dataDimen];
+		   this.preCentroid=new double[k][dataDimen];
+		   this.labelList=new int[dataNum];
+		   this.labelNum =new int[k];
+	   }
+	   
+	   //初始化中心点
+	   private void initCentroids(){
+		   Random rand = new Random();
+		   for(int i=0;i<k;++i){
+			   int index = rand.nextInt(dataNum);
+			   System.out.println("index="+index);
+			   for(int j=0;j<dataDimen;++j){
+				   centroids[i][j]=dataSet[index][j];
+				   preCentroid[i][j]=dataSet[index][j];
+			   }
+		   }
+	   }
+	   
+	   //更新中心点
+	   private void updateCentroids(){
+		   double[][] tmpCentroid = new double[k][dataDimen];
+		   for(int i=0;i<k;++i){
+			   Arrays.fill(tmpCentroid[i], 0);
+		   }
+		   for(int i=0;i<dataNum;++i){
+			   int label = labelList[i];
+			   for(int j=0;j<dataDimen;++j){
+				   tmpCentroid[label][j]+=dataSet[i][j];
+			   }
+		   }
+		   for(int i=0;i<k;++i){
+			   for(int j=0;j<dataDimen;++j){
+				   tmpCentroid[i][j]/=labelNum[i];
+				   this.centroids[i][j]=tmpCentroid[i][j];
+			   }
+		   }
+	   }
+	   
+	   //检查是否收敛
+	   public boolean checkFinished(){
+		   for(int j=0;j<k;++j){
+		    for(int i=0;i<dataDimen;++i){
+		    	if(preCentroid[j][i]!=centroids[j][i]){
+		    		return false;
+		    	}
+		    }
+		   }
+		     return true;
+	   }
+	   
+	   
+	   public double[][] cluster(){
+		   initCentroids();
+		   for(int gen=0;gen<40;++gen){
+		   Arrays.fill(labelNum, 0);
+		   for(int i=0;i<dataNum;++i){
+			   double minDist = Double.MAX_VALUE;
+			   int label = 0;
+			   for(int j=0;j<k;++j){
+				   double result = GMMUtil.computeDistance(dataSet[i], centroids[j]);
+				   if(minDist>result){
+					   minDist=GMMUtil.computeDistance(dataSet[i], centroids[j]);
+					   label=j;
+				   }else if(minDist==result){
+					   Random rand = new Random();
+					   double port = rand.nextDouble();
+					   if(port<0.5){
+						   label=j;
+					   }
+				   }
+			   }
+			   labelList[i]=label;
+			   labelNum[label]++;
+		   }
+		   System.out.print("labelNum=");
+		   System.out.println(Arrays.toString(labelNum));
+		   System.out.print("labelList=");
+		   System.out.println(Arrays.toString(labelList));
+		   //更新中心点
+		   System.out.println("中心点为:");
+		   updateCentroids();
+		   for(int i=0;i<k;++i){
+			   System.out.println(Arrays.toString(centroids[i]));
+		   }
+		   if(checkFinished()){
+			   System.out.println("finished");
+			   break;
+		   }else{
+			   for(int i=0;i<k;++i){
+				   for(int j=0;j<dataDimen;++j){
+					   preCentroid[i][j]=centroids[i][j];
+				   }
+			   }
+		   }
+	   }
+		   //测试聚类结果
+		   ClusterEvaluation ce = new ClusterEvaluation();
+		   ce.test(input, labelList);
+		   return this.centroids;
+	   }
+	   }
 }  

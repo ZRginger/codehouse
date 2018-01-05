@@ -3,8 +3,10 @@ package indi.measure;
 import indi.Container.Authors;
 import indi.Container.Segment;
 import indi.Container.Segments;
+import indi.test.ClusterEvaluation;
 import indi.util.Util;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Hashtable;
@@ -17,21 +19,24 @@ import java.util.StringTokenizer;
  *
  */
 public class InitParameter {
-	static private String SEPERATE_WORD_REGEX_PATTERN =" ,?.!:\"\"''\n";
-	private int widthForWordsShowTwiceVector = 0;
-	private int widthForWordsShowInVector = 0;
-	private int height = 0;
-	private Segments segments = null;
+	static private String SEPERATE_WORD_REGEX_PATTERN = " ,?.!:\"\"''-\n";
+	private int widthForWordsShowTwiceVector = 0;	//在文章中出现两次的单词个数
+	private int widthForWordsShowInVector = 0;		//在文章中出现的单词的个数
+	private int height = 0;							//segment的个数
+	private Segments segments = null;	
 	private Hashtable<String, Integer> hTable = null;
 	private ArrayList<String> wordsShowTwice = null;
 	private ArrayList<String> wordsShowUp = null;
 	private boolean[][] vectorForWordsShowTwice = null;
 	private int[][]     vectorForCountWordsShowInSegment = null;
+	private int[]       input = null;				//已知分类结果
 	//马尔科夫模型的初始参数
-	private double[][]  convertMattrix = null;		//状态转移矩阵
-	private double[]    stateInitMattrix = null; 	//初始状态矩阵
-	private double[][]  transmitMattrix = null;	 	//发射矩阵
-		
+//	private double[][]  convertMattrix = null;		//状态转移矩阵
+//	private double[]    stateInitMattrix = null; 	//初始状态矩阵
+//	private double[][]  transmitMattrix = null;	 	//发射矩阵
+	private double[][]  rconvertMattrix = null;		//状态转移矩阵
+	private double[]    rstateInitMattrix = null; 	//初始状态矩阵
+	private double[][]  rtransmitMattrix = null;	 	//发射矩阵
 		public InitParameter() throws Exception {
 			super();
 			segments = new Segments();
@@ -83,24 +88,25 @@ public class InitParameter {
 		 */
 		private double[][] computeTFIDF(){
 			//计算出现各个单词的文档数
-			int[] countSegmentContainSpecificWord = new int[widthForWordsShowInVector];
-			for(int i=0;i<widthForWordsShowInVector;++i){
+			int[] countSegmentContainSpecificWord = new int[widthForWordsShowTwiceVector];
+			for(int i=0;i<widthForWordsShowTwiceVector;++i){
 				for(int j=0;j<height;++j){
-					if(vectorForCountWordsShowInSegment[j][i]!=0){
+					if(vectorForWordsShowTwice[j][i]!=false){
 						countSegmentContainSpecificWord[i]++;
 					}
 				}
 			}
-			double[][] TFMattrix = new double[height][widthForWordsShowInVector];
+			double[][] TFMattrix = new double[height][widthForWordsShowTwiceVector];
 			for(int i=0;i<height;++i){
-				for(int j=0;j<widthForWordsShowInVector;++j){
+				for(int j=0;j<widthForWordsShowTwiceVector;++j){
 					double temp = Math.log10(height/(double)countSegmentContainSpecificWord[j]);
-					TFMattrix[i][j]=vectorForCountWordsShowInSegment[i][j]*temp;
+					if(vectorForWordsShowTwice[i][j]==true){
+						TFMattrix[i][j]=vectorForCountWordsShowInSegment[i][j]*temp;
+					}
 				}
 			}
 			return TFMattrix;
 		}
-		
 		
 		private void doCreateVectorForSegment(int i,Segment segment){
 			ArrayList<String> sentence=segment.getSentences();
@@ -154,22 +160,14 @@ public class InitParameter {
 		}
 		
 		/**
-		 *  @Description:利用GMM给每个Segment指派最可能属于的作者
+		 *  @throws IOException 
+		 * @Description:利用GMM给每个Segment指派最可能属于的作者
 		 */
-		private void doAssignAuthorToSegment(){
+		private void doAssignAuthorToSegment() throws IOException{
 			double[][] TFMattrix = computeTFIDF();
-			
 			//判断错误
-			for(int i=0;i<widthForWordsShowInVector;++i){
-				double total =0;
-				for(int j=0;j<height;++j){
-					total+=TFMattrix[j][i];
-				}
-			}
-			
-			//随机选择K个均值点pmiu
-			int k=this.convertMattrix.length;
-			GMMMixtureModel gmm = new GMMMixtureModel(TFMattrix, height, k, TFMattrix[0].length);
+			int k=this.segments.getAuthorCount();
+			GMMMixtureModel gmm = new GMMMixtureModel(TFMattrix, height, k, TFMattrix[0].length,input);
 			int[] res=gmm.GMMCluster();
 		}
 		
@@ -204,13 +202,15 @@ public class InitParameter {
 					totalCount[i]+=tempArr[i][j];
 				}
 			}
+			//计算标准转移矩阵
+			
 			this.convertMattrix=new double[stateCount][stateCount];
 			for(int i=0;i<stateCount;++i){
 				for(int j=0;j<stateCount;++j){
 					this.convertMattrix[i][j]=tempArr[i][j]/totalCount[i];
 				}
 			}
-			System.out.println("状态转移矩阵为:");
+			System.out.println("标准状态转移矩阵为:");
 			for(int i=0;i<stateCount;++i){
 					System.out.println(Arrays.toString(this.convertMattrix[i]));
 			}
@@ -233,7 +233,7 @@ public class InitParameter {
 			for(int i=0;i<authorCount;++i){
 				this.stateInitMattrix[i]=authors[i]/(double)height;
 			}
-			System.out.println("初始状态概率:"+Arrays.toString(this.stateInitMattrix));
+			System.out.println("标准初始状态概率:"+Arrays.toString(this.stateInitMattrix));
 		}
 
 		/**
@@ -290,7 +290,6 @@ public class InitParameter {
 					portionMattrix[i][j]=vectorForWordsShowInAuthor[i][j]/(double)total[i];
 				} 
 			}
-			
 			for(int i=0;i<authorCount;++i){
 				for(int j=0;j<sentenceCount;++j){
 					double temp = 0;
@@ -302,19 +301,47 @@ public class InitParameter {
 					transmitMattrix[i][j]=temp;
 				}
 			}
-			System.out.println("发射概率矩阵为:");
+			System.out.println("标准发射概率矩阵为:");
 			for(int i=0;i<authorCount;++i){
 				System.out.println(Arrays.toString(transmitMattrix[i]));
 			}
+			for(int i=0;i<authorCount;++i){
+				double p = 0;
+				for(int j=0;j<sentenceCount;++j){
+					p+=transmitMattrix[i][j];
+				}
+				System.out.println(p);
+			}
 		}
 		
-		
+		public void showSegmentAuthor(){
+			int authorCount = this.segments.getAuthorCount();
+			int segmentCount = this.segments.getSegmentCount();
+			int[] segmentAuthor = new int[authorCount];
+			input = new int[segmentCount];
+			Arrays.fill(input, 0);
+			Arrays.fill(segmentAuthor, 0);
+			ArrayList<Segment> sl=this.segments.getSegments();
+			Iterator<Segment> it = sl.iterator();
+			int index=0;
+			while(it.hasNext()){
+				Segment s = it.next();
+				int author = s.getAuthor();
+				segmentAuthor[author]++;
+				input[index]=author;
+				++index;
+			}
+			System.out.println("作者编写个数");
+			System.out.println(Arrays.toString(segmentAuthor));
+			System.out.println(Arrays.toString(input));
+		}
 		
 		public static void main(String[] args) throws Exception{
 			InitParameter ip = new InitParameter();
 			ip.doCreateVector();
-			ip.setConvertMattrix();
+			ip.showSegmentAuthor();
 			ip.doAssignAuthorToSegment();
+			ip.setConvertMattrix();
 			ip.setStateInitMAttrix();
 			ip.setTransmitMattrix();
 		}

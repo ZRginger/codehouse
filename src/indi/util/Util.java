@@ -1,6 +1,11 @@
 package indi.util;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Util {
 
@@ -20,5 +25,12 @@ public class Util {
 			res.add(tmp);
 		}
 		return res;
+	}
+	static public void writeToFile(double[][] input) throws IOException{
+		File file = new File("output.txt");
+		FileWriter fw = new FileWriter(file);
+		for(int i=0;i<input.length;++i){
+			fw.write(Arrays.toString(input[i]));
+		}
 	}
 }
