@@ -1,0 +1,302 @@
+package edu.fjnu.study;
+
+import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class HMM {
+	
+	  
+	
+	 /** number of states 作者个数*/
+	  public int numStates;
+
+	  /** size of output vocabulary segment个数*/
+	  public int sigmaSize;
+
+	  /** initial state probabilities π初始概率 */
+	  public double pi[];
+
+	  /** transition probabilities  A转移概率*/
+	  public double a[][];
+
+	  /** emission probabilities B发射概率*/
+	  public double b[][];
+
+	  /** 正确答案 */
+	  ArrayList<Integer> sequence;     
+      
+	  /** 答案 */
+	  ArrayList<Integer> best;
+	  
+	  
+	  /** initializes an HMM.
+	      @param numStates number of states
+	      @param sigmaSize size of output vocabulary 
+	  */
+	  public HMM(int numStates, int sigmaSize,double[] pii,double[][] aa,double[][] bb,ArrayList<Integer> sequ) {
+		  
+		this.best=new ArrayList<Integer>();
+		this.sequence=new ArrayList<Integer>();
+		sequence=sequ;
+		System.out.println();
+		for(int i=0;i<sequence.size();i++){
+	    	System.out.print(sequence.get(i)+"->");
+	    }
+		System.out.println();
+		  
+	    this.numStates = numStates;
+	    this.sigmaSize = sigmaSize;
+	    pi = new double[numStates];
+	    a = new double[numStates][numStates];
+	    b = new double[numStates][sigmaSize];
+	    
+	    System.arraycopy(pii, 0, this.pi, 0, pii.length);
+	    System.arraycopy(aa, 0, this.a, 0, aa.length);
+	    System.arraycopy(bb, 0, this.b, 0, bb.length);
+	    
+	    train(1);
+	    compare();
+	  }
+
+	  /** implementation of the Baum-Welch Algorithm for HMMs.
+	      @param o the training set
+	      @param steps the number of steps
+	  */
+	  public void train(int steps) {
+
+		int[] o=new int[sigmaSize];
+		for(int i=0;i<sigmaSize;i++){
+			o[i]=i;
+		}
+	    int T = o.length;//o是观察序列
+	    double[][] fwd=null;
+	    double[][] bwd=null;
+
+	    double pi1[] = new double[numStates];
+	    double a1[][] = new double[numStates][numStates];
+	    double b1[][] = new double[numStates][sigmaSize];
+	    
+	    DecimalFormat fmt = new DecimalFormat();
+	    fmt.setMinimumFractionDigits(5);
+	    fmt.setMaximumFractionDigits(5);
+
+	    for (int s = 0; s < steps; s++) {
+	      /* calculation of Forward- und Backward Variables from the
+		 current model */
+	      fwd = forwardProc(o);//规模为numStates × T
+	      bwd = backwardProc(o);//规模为numStates × T
+	      
+
+//	      System.out.println();
+//		    for (int i = 0; i < numStates; i++) {
+//		      for (int k = 0; k < sigmaSize; k++)
+//			System.out.print("fwd(" + i + "," + k + ") = " + 
+//					 fwd[i][k] + "  ");
+//		      System.out.println();
+//		    }
+	      
+	      /* re-estimation of initial state probabilities 更新π*/
+	      for (int i = 0; i < numStates; i++)
+	    	  pi1[i] = gamma(i, 0, o, fwd, bwd);
+
+	      /* re-estimation of transition probabilities */ 
+	      for (int i = 0; i < numStates; i++) {
+	    	  for (int j = 0; j < numStates; j++) {
+				  double num = 0;
+				  double denom = 0;
+				  for (int t = 0; t <= T - 1; t++) {
+				    num += p(t, i, j, o, fwd, bwd);
+				    denom += gamma(i, t, o, fwd, bwd);
+				  }
+				  a1[i][j] = divide(num, denom);
+	    	  }
+	      }
+	      
+	      /* re-estimation of emission probabilities */
+	      for (int i = 0; i < numStates; i++) {
+			  for (int k = 0; k < sigmaSize; k++) {
+				  double num = 0;
+				  double denom = 0;
+				  
+				  for (int t = 0; t <= T - 1; t++) {
+				      double g = gamma(i, t, o, fwd, bwd);
+				      num += g * (k == o[t] ? 1 : 0);
+				      denom += g;
+				  }
+				  b1[i][k] = divide(num, denom);
+			  }
+	      }
+	      
+		  System.arraycopy(pi1, 0, this.pi, 0, pi1.length);
+		  System.arraycopy(a1, 0, this.a, 0, a1.length);
+		  System.arraycopy(b1, 0, this.b, 0, b1.length);
+	     print(); 
+	    }
+	    getBest(fwd);
+	  }
+	  
+
+	  /** calculation of Forward-Variables f(i,t) for state i at time
+	      t for output sequence O with the current HMM parameters
+	      @param o the output sequence O
+	      @return an array f(i,t) over states and times, containing
+	              the Forward-variables. 
+	  */
+	  public double[][] forwardProc(int[] o) {
+	    int T = o.length;
+	    double[][] fwd = new double[numStates][T];//规模为(作者个数)N*T(segment个数)
+	        
+	    /* initialization (time 0) */
+	    for (int i = 0; i < numStates; i++)
+	      fwd[i][0] = pi[i] * b[i][o[0]];
+
+	    /* induction */
+	    for (int t = 0; t <= T-2; t++) {
+	      for (int j = 0; j < numStates; j++) {	    	  
+			  fwd[j][t+1] = 0;
+			  for (int i = 0; i < numStates; i++)				  				  
+			      fwd[j][t+1] += (fwd[i][t] * a[i][j]);
+			  fwd[j][t+1] *= b[j][o[t+1]];
+	      }
+	    }
+
+	    return fwd;
+	  }
+
+	  /** calculation of  Backward-Variables b(i,t) for state i at time
+	      t for output sequence O with the current HMM parameters
+	      @param o the output sequence O
+	      @return an array b(i,t) over states and times, containing
+	              the Backward-Variables. 
+	  */
+	  public double[][] backwardProc(int[] o) {
+	    int T = o.length;
+	    double[][] bwd = new double[numStates][T];
+	        
+	    /* initialization (time 0) */
+	    for (int i = 0; i < numStates; i++)
+	      bwd[i][T-1] = 1;
+
+	    /* induction */
+	    for (int t = T - 2; t >= 0; t--) {	    	
+	        for (int i = 0; i < numStates; i++) {
+		        bwd[i][t] = 0;
+			    for (int j = 0; j < numStates; j++)
+			        bwd[i][t] += (bwd[j][t+1] * a[i][j] * b[j][o[t+1]]);
+	      }
+	    }
+
+	    return bwd;
+	  }
+
+	  /** calculation of probability P(X_t = s_i, X_t+1 = s_j | O, m).
+	      @param t time t
+	      @param i the number of state s_i
+	      @param j the number of state s_j
+	      @param o an output sequence o
+	      @param fwd the Forward-Variables for o
+	      @param bwd the Backward-Variables for o
+	      @return P
+	  */
+	  public double p(int t, int i, int j, int[] o, double[][] fwd, double[][] bwd) {
+	    double num;
+	    if (t == o.length - 1)//如果是最后一个
+	      num = fwd[i][t] * a[i][j];
+	    else
+	      num = fwd[i][t] * a[i][j] * b[j][o[t+1]] * bwd[j][t+1];
+
+	    double denom = 0;
+
+	    for (int k = 0; k < numStates; k++)//前向的*后向的总和
+	      denom += (fwd[k][t] * bwd[k][t]);
+
+	    return divide(num, denom);
+	  }
+
+	  /** computes gamma(i, t) */
+	  public double gamma(int i, int t, int[] o, double[][] fwd, double[][] bwd) {
+	    double num = fwd[i][t] * bwd[i][t];
+	    double denom = 0;
+
+	    for (int j = 0; j < numStates; j++)
+	      denom += fwd[j][t] * bwd[j][t];
+
+	    return divide(num, denom);
+	  }
+
+	  /** prints all the parameters of an HMM */
+	  public void print() {
+	    DecimalFormat fmt = new DecimalFormat();
+	    fmt.setMinimumFractionDigits(5);
+	    fmt.setMaximumFractionDigits(5);
+	    
+	    for (int i = 0; i < numStates; i++)
+	      System.out.println("pi(" + i + ") = " + fmt.format(pi[i]));
+	    System.out.println();
+
+	    for (int i = 0; i < numStates; i++) {
+	      for (int j = 0; j < numStates; j++)
+		System.out.print("a(" + i + "," + j + ") = " + 
+				 fmt.format(a[i][j]) + "  ");
+	      System.out.println();
+	    }
+
+	    System.out.println();
+	    for (int i = 0; i < numStates; i++) {
+	      for (int k = 0; k < sigmaSize; k++)
+		System.out.print("b(" + i + "," + k + ") = " + 
+				 fmt.format(b[i][k]) + "  ");
+	      System.out.println();
+	    }
+	    
+	    
+	  }
+
+	  public void getBest(double[][] fwd){//译码
+		  System.out.println("数量="+sigmaSize);
+		  System.out.println("结果：");
+		  for(int i=0;i<sigmaSize;i++){
+			  double max=0;
+			  int k=0;
+			  int j;
+			  for(j=0;j<numStates;j++){
+				  if((j==0)||(max<fwd[j][i])){
+					  max=fwd[j][i];
+					  k=j;
+				  }
+			  }
+			  best.add(k);
+			  System.out.print(best.get(i)+"->");
+		  }
+		  System.out.println();
+		   
+	  }
+	  
+	  private void compare(){
+		  int num=0;
+		  int t1;
+		  int t2;
+		  for(int i=0;i<best.size();i++){
+			  t1=(int)(best.get(i));
+			  t2=(int)(sequence.get(i));
+			  if(t1!=t2)
+				  num++;
+		  }
+		  System.out.println("比率："+(double)sigmaSize/(double)num);
+		  
+		  
+	  }
+	  
+	  
+	  
+	  /** divides two doubles. 0 / 0 = 0!    n/d(当n=0时返回结果为0）*/
+	  public double divide(double n, double d) {
+	    if (n == 0)
+	      return 0;
+	    else
+	      return n / d;
+	  }
+	
+
+}
